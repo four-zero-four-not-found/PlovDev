@@ -1,9 +1,11 @@
+import NavbarLogin from "./components/layout/NavbarLogin";
+
 function App() {
   return (
     <div>
-      <h1>PlovDev</h1>
+      <NavbarLogin />
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
