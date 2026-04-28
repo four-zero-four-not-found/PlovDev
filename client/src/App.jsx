@@ -1,9 +1,5 @@
-function App() {
-  return (
-    <div>
-      <h1>PlovDev</h1>
-    </div>
-  )
-}
+import SigninPage from "./pages/public/SigninPage.jsx";
 
-export default App
+export default function App() {
+  return <SigninPage />;
+}
