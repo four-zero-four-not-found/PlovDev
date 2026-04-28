@@ -8,9 +8,9 @@ export default function NavbarLogin() {
           {/* Logo */}
           <ul className="hidden md:flex gap-6 text-black">
             <li className="hover:text-gray-300 cursor-pointer">Home</li>
-            <li className="hover:text-gray-300 cursor-pointer">About</li>
-            <li className="hover:text-gray-300 cursor-pointer">Services</li>
-            <li className="hover:text-gray-300 cursor-pointer">Contact</li>
+            <li className="hover:text-gray-300 cursor-pointer">Courses</li>
+            <li className="hover:text-gray-300 cursor-pointer">About US</li>
+            <li className="hover:text-gray-300 cursor-pointer">Job Board</li>
           </ul>
 
           {/* Desktop Menu */}
@@ -18,17 +18,17 @@ export default function NavbarLogin() {
             <input
               type="text"
               placeholder="Search..."
-              className="px-3 py-1 rounded-md text-black border border-gray-300"
+              className="px-3 py-2 rounded-md text-black border border-gray-300"
             />
             <button
               type="submit"
-              className="bg-blue-500 px-3 py-1 rounded-md hover:bg-[#FFD308]"
+              className="border border-gray-300 px-3 py-2 rounded-md hover:bg-[#FFC400] text-black"
             >
               Sign In
             </button>
             <button
               type="submit"
-              className="bg-blue-500 px-3 py-1 rounded-md hover:bg-blue-600"
+              className="bg-[#FFD308]  px-3 py-2 rounded-md text-black"
             >
               Sign Up for free
             </button>
