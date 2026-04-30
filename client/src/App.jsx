@@ -1,9 +1,14 @@
+import Footer from "./components/layout/Footer";
+import NavbarLogin from "./components/layout/NavbarLogin";
+import LoginPage from "./pages/public/LoginPage";
+import SigninPage from "./pages/public/SigninPage";
+
 function App() {
   return (
-    <div>
-      <h1>PlovDev</h1>
-    </div>
-  )
+    <>
+      <LoginPage />
+    </>
+  );
 }
 
-export default App
+export default App;
