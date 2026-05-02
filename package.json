@@ -1,0 +1,17 @@
+{
+  "name": "plov-dev",
+  "version": "1.0.0",
+  "description": "Full-stack application with React frontend and Express backend",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently \"npm run dev --prefix backend\" \"npm run dev --prefix client\"",
+    "dev:backend": "npm run dev --prefix backend",
+    "dev:client": "npm run dev --prefix client",
+    "build": "npm run build --prefix client",
+    "migrate": "npm run migrate --prefix backend",
+    "migrate:undo": "npm run migrate:undo --prefix backend"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.0"
+  }
+}
