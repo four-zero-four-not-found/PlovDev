@@ -88,19 +88,18 @@ const TeacherDashboard = () => {
   ];
 
   return (
-    <div className="flex flex-col h-screen">
+    <div className="flex flex-col min-h-screen">
       {/* Navbar */}
       <nav className="fixed top-0 left-0 right-0 bg-white border-b border-gray-200 z-50">
         <NavbarLogin />
       </nav>
 
-      {/* Main Container */}
-      <div className="flex flex-1 mt-16">
+      <div className="flex flex-1 pt-16">
         {/* Sidebar */}
         <Sidebar />
 
         {/* Main Content */}
-        <main className="ml-56 flex-1 overflow-auto bg-gray-50">
+        <div className="flex-1 ml-56 bg-gray-50">
           <div className="p-8">
             {/* Page Title */}
             <h1 className="text-4xl font-bold text-gray-900 mb-8">
@@ -286,11 +285,12 @@ const TeacherDashboard = () => {
               </div>
             </div>
           </div>
-        </main>
+        </div>
       </div>
+  
 
       {/* Footer */}
-      <footer className="mt-auto">
+      <footer className="ml-56 bg-white border-t border-gray-200">
         <Footer />
       </footer>
     </div>
