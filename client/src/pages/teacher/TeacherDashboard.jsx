@@ -113,7 +113,7 @@ const TeacherDashboard = () => {
                 return (
                   <div
                     key={idx}
-                    className="bg-white rounded-lg p-6 shadow-sm hover:shadow-md transition"
+                    className="bg-white rounded-lg p-6 shadow-md hover:shadow-xl transition"
                   >
                     <div className="flex justify-between items-start mb-4">
                       <div>
@@ -180,13 +180,13 @@ const TeacherDashboard = () => {
                   <div className="flex gap-4 mt-4">
                     <a
                       href="#"
-                      className="text-amber-500 hover:text-amber-600 text-sm font-medium"
+                      className="text-amber-500 hover:text-amber-600 text-sm font-medium border rounded-full p-3"
                     >
                       View Payment History
                     </a>
                     <a
                       href="#"
-                      className="text-amber-500 hover:text-amber-600 text-sm font-medium"
+                      className="text-amber-500 hover:text-amber-600 text-sm font-medium border rounded-full p-3"
                     >
                       Edit Payment Details
                     </a>
