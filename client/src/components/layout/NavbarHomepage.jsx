@@ -3,39 +3,46 @@ import React from "react";
 import { CgProfile } from "react-icons/cg";
 export default function NavbarHomepage() {
   return (
-    <div className="max-w-[1200px] mx-auto px-4">
-      <nav className=" text-white px-6 py-3">
-        <div className="flex justify-between items-center">
+    <header className="fixed inset-x-0 top-0 z-50 px-4 pt-4">
+      <div className="mx-auto max-w-[1200px]">
+        <nav className="rounded-[28px] border border-white/45 bg-white/40 px-6 py-3 text-white shadow-[0_18px_45px_rgba(15,23,42,0.12)] backdrop-blur-2xl">
+          <div className="flex items-center justify-between gap-4">
           {/* Logo */}
-          <ul className="hidden md:flex gap-6 text-black">
-            <li className=" cursor-pointer">Home</li>
-            <li className=" cursor-pointer">Courses</li>
-            <li className=" cursor-pointer">About US</li>
-            <li className=" cursor-pointer">Job Board</li>
-          </ul>
+            <ul className="hidden gap-6 text-black md:flex">
+              <li className="cursor-pointer">Home</li>
+              <li className="cursor-pointer">Courses</li>
+              <li className="cursor-pointer">About US</li>
+              <li className="cursor-pointer">Job Board</li>
+            </ul>
 
-          {/* Desktop Menu */}
-          <form className="flex items-center gap-2">
-            <input
-              type="text"
-              placeholder="Search..."
-              className="px-3 py-2 rounded-md text-black border border-gray-300"
-            />
-            <button
-              type="submit"
-              className="  px-3 py-2 rounded-md  text-black"
-            >
-              Instructor
-            </button>
-            <button type="submit" className="  px-3 py-2 rounded-md text-black">
-              My Learning
-            </button>
-            <CgProfile className="text-black items-center text-xl" />
-          </form>
+            {/* Desktop Menu */}
+            <form className="flex items-center gap-2">
+              <input
+                type="text"
+                placeholder="Search..."
+                className="rounded-full border border-white/55 bg-white/65 px-3 py-2 text-black shadow-[0_10px_30px_rgba(15,23,42,0.08)] backdrop-blur-md"
+              />
+              <button
+                type="submit"
+                className="rounded-full border border-white/45 bg-white/45 px-3 py-2 text-black backdrop-blur-md"
+              >
+                Instructor
+              </button>
+              <button
+                type="submit"
+                className="rounded-full border border-white/45 bg-white/45 px-3 py-2 text-black backdrop-blur-md"
+              >
+                My Learning
+              </button>
+              <div className="rounded-full border border-white/45 bg-white/45 p-2 backdrop-blur-md">
+                <CgProfile className="items-center text-xl text-black" />
+              </div>
+            </form>
 
-          {/* Mobile Button */}
-        </div>
-      </nav>
-    </div>
+            {/* Mobile Button */}
+          </div>
+        </nav>
+      </div>
+    </header>
   );
 }

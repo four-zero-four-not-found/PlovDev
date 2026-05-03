@@ -5,7 +5,7 @@ import Footer from '../../components/layout/Footer'
 
 export default function LoginPage() {
   return (
-    <div>
+    <div className="pt-28">
       <NavbarLogin/>
       <SigninPage/>
       <Footer/>
