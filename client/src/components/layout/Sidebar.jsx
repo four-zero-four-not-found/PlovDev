@@ -38,16 +38,16 @@ const Sidebar = () => {
   ];
 
   return (
-    <aside className="fixed left-0 top-15 h-screen w-56 bg-gray-100 flex flex-col z-40">
+    <aside className="min-h-screen w-56 bg-gray-100 flex flex-col z-10">
         {/* Accent Strip */}
         <div className="absolute right-0 top-0 w-10 h-full"></div>
 
         {/* Navigation Sections */}
-        <nav className="flex-1  px-4 py-8 space-y-8">
+        <nav className="flex-1 font-semibold px-4 py-8 space-y-8">
           {navSections.map((section, idx) => (
             <div key={idx}>
               {/* Section Title */}
-              <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-4 px-2">
+              <h3 className="text-md font-bold text-black uppercase tracking-wide mb-4 px-2">
                 {section.title}
               </h3>
 
@@ -76,11 +76,12 @@ const Sidebar = () => {
               </ul>
             </div>
           ))}
-
+        </nav>
+          
         {/* Logout Section */}
-        <div className="border-t border-gray-300 p-4">
+        <div className="border-t border-gray-300 p-4 mt-28">
           <button
-            className="w-full flex items-center justify-center gap-4 bg-orange-300 hover:bg-orange-400 text-gray-900 font-medium py-3 px-4 rounded-lg transition-colors duration-200"
+            className="w-full flex items-center justify-center gap-2 bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-medium py-3 px-4 rounded-lg transition-colors duration-200"
             onClick={() => {
               // Handle logout
               console.log('Logout clicked');
@@ -90,7 +91,6 @@ const Sidebar = () => {
             <span className="text-sm">Logout</span>
           </button>
         </div>
-        </nav>
       </aside>
 
   );

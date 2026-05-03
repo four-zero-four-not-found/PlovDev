@@ -99,7 +99,7 @@ const TeacherDashboard = () => {
         <Sidebar />
 
         {/* Main Content */}
-        <div className="flex-1 ml-56 bg-gray-50">
+        <div className="flex-1 bg-gray-50">
           <div className="p-8">
             {/* Page Title */}
             <h1 className="text-4xl font-bold text-gray-900 mb-8">
@@ -290,7 +290,7 @@ const TeacherDashboard = () => {
   
 
       {/* Footer */}
-      <footer className="ml-56 bg-white border-t border-gray-200">
+      <footer className="w-full bg-white border-t border-gray-200">
         <Footer />
       </footer>
     </div>
