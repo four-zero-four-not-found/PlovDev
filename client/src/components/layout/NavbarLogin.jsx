@@ -1,10 +1,29 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 export default function NavbarLogin() {
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 24);
+    };
+
+    handleScroll();
+    window.addEventListener("scroll", handleScroll);
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
     <header className="fixed inset-x-0 top-0 z-50 px-4 pt-4">
       <div className="mx-auto max-w-[1200px]">
-        <nav className="rounded-[28px] border border-white/45 bg-white/40 px-6 py-3 text-white shadow-[0_18px_45px_rgba(15,23,42,0.12)] backdrop-blur-2xl">
+        <nav
+          className={`rounded-[28px] px-6 py-3 text-white backdrop-blur-2xl transition-all duration-300 ${
+            isScrolled
+              ? "border border-white/20 bg-white/10 shadow-[0_12px_30px_rgba(15,23,42,0.08)]"
+              : "border border-white/45 bg-white/40 shadow-[0_18px_45px_rgba(15,23,42,0.12)]"
+          }`}
+        >
           <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
           {/* Logo */}
             <ul className="hidden gap-6 text-slate-800 md:flex">
@@ -36,14 +55,14 @@ export default function NavbarLogin() {
               </div>
               <div className="grid w-full grid-cols-2 gap-3 sm:w-auto">
                 <button
-                  type="submit"
-                  className="rounded-full border border-slate-300/80 bg-white/55 px-4 py-2 text-sm font-medium text-slate-800 shadow-[0_10px_24px_rgba(15,23,42,0.05)] backdrop-blur-md transition hover:-translate-y-0.5 hover:border-slate-400 hover:bg-white/80"
+                  type="button"
+                  className="rounded-full border border-slate-300/80 bg-white/55 px-4 py-2 text-sm font-medium text-slate-800 shadow-[0_10px_24px_rgba(15,23,42,0.05)] backdrop-blur-md transition-colors duration-300 ease-out hover:border-slate-400 hover:bg-white/80"
                 >
                   Sign In
                 </button>
                 <button
-                  type="submit"
-                  className="rounded-full border border-amber-300/80 bg-gradient-to-r from-amber-300 via-yellow-300 to-orange-200 px-4 py-2 text-sm font-semibold text-slate-900 shadow-[0_12px_28px_rgba(245,158,11,0.22)] transition hover:-translate-y-0.5 hover:from-amber-400 hover:via-yellow-300 hover:to-orange-300"
+                  type="button"
+                  className="rounded-full border border-amber-300/80 bg-gradient-to-r from-amber-300 via-yellow-300 to-orange-200 px-4 py-2 text-sm font-semibold text-slate-900 shadow-[0_12px_28px_rgba(245,158,11,0.22)] transition-colors duration-300 ease-out hover:from-amber-400 hover:via-yellow-300 hover:to-orange-300"
                 >
                   Sign Up for free
                 </button>

@@ -1,9 +1,16 @@
 import { useState } from "react";
+import {
+  handleGoogleLoginOrSignup,
+  LogIn,
+  SignUp,
+} from "../../service/auth.service";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 
 const GoogleIcon = () => (
   <svg
     viewBox="0 0 24 24"
-    className="w-5 h-5"
+    className="w-full h-5"
     xmlns="http://www.w3.org/2000/svg"
   >
     <path
@@ -71,21 +78,21 @@ const EyeIcon = ({ open }) => (
 );
 
 const SocialButtons = () => (
-  <div className="grid grid-cols-3 gap-2">
-    {[
-      { icon: <GoogleIcon />, label: "Google" },
-      { icon: <FacebookIcon />, label: "Facebook" },
-      { icon: <GithubIcon />, label: "GitHub" },
-    ].map(({ icon, label }) => (
-      <button
-        key={label}
-        type="button"
-        aria-label={label}
-        className="flex items-center justify-center rounded-xl border border-white/45 bg-white/22 py-2.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.5),0_10px_30px_rgba(15,23,42,0.08)] backdrop-blur-xl transition-all duration-150 hover:-translate-y-0.5 hover:border-white/70 hover:bg-white/30 hover:shadow-md"
-      >
-        {icon}
-      </button>
-    ))}
+  <div>
+    {[{ icon: <GoogleIcon />, label: "Continue with Google" }].map(
+      ({ icon, label }) => (
+        <button
+          onClick={handleGoogleLoginOrSignup}
+          key={label}
+          type="button"
+          aria-label={label}
+          className="flex w-full items-center justify-center gap-3 rounded-full border border-white/45 bg-white/22 py-3 text-sm font-semibold text-slate-800 shadow-[inset_0_1px_0_rgba(255,255,255,0.5),0_10px_30px_rgba(15,23,42,0.08)] backdrop-blur-xl transition-colors duration-300 ease-out hover:border-white/70 hover:bg-white/30"
+        >
+          <span className="h-5 w-5">{icon}</span>
+          <span>{label}</span>
+        </button>
+      )
+    )}
   </div>
 );
 
@@ -94,13 +101,40 @@ export default function SigninPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [username, setUsername] = useState("");
+  const [fullName, setFullName] = useState("");
   const isSignin = tab === "signin";
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState("");
+  const navigate = useNavigate();
+  const { accessToken, setAccessToken } = useAuth();
+
+  const [emailSignIn, setEmailSignIn] = useState("");
+  const [passwordSignIn, setPasswordSingIn] = useState("");
+
+  const handleSignup = async () => {
+    try {
+      await SignUp({ fullName, email, password });
+      navigate("otppage", { state: { userId: user.userId } });
+    } catch (error) {
+      setError(error.message || "Sign up failed!");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleSignIn = async () => {
+    const data = await LogIn({ email: emailSignIn, password: passwordSignIn });
+    setAccessToken(data.accessToken);
+
+    setTimeout(() => {
+      navigate("/homepage");
+    }, 2000);
+  };
 
   return (
-    <div className="relative flex min-h-[calc(100vh-4rem)] items-center justify-center overflow-hidden px-4 py-3 font-sans">
+    <div className="relative flex min-h-[calc(100vh-4rem)] items-center justify-center overflow-hidden px-4 py-6 font-sans">
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(255,255,255,0.85),_transparent_32%),radial-gradient(circle_at_bottom_right,_rgba(250,204,21,0.28),_transparent_30%),linear-gradient(135deg,_rgba(252,231,243,0.65),_rgba(219,234,254,0.7)_55%,_rgba(254,249,195,0.72))]" />
-      <div className="relative w-full max-w-[22rem] space-y-4 rounded-3xl border border-white/35 bg-white/14 p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.45),0_25px_70px_rgba(15,23,42,0.18)] backdrop-blur-[28px]">
+      <div className="relative w-full max-w-[28rem] space-y-5 rounded-3xl border border-white/35 bg-white/14 p-6 shadow-[inset_0_1px_0_rgba(255,255,255,0.45),0_25px_70px_rgba(15,23,42,0.18)] backdrop-blur-[28px] md:p-7">
         <div className="pointer-events-none absolute inset-x-6 top-0 h-px bg-white/60" />
         <div className="relative flex rounded-full border border-white/35 bg-white/18 p-1 shadow-[inset_0_1px_0_rgba(255,255,255,0.35),0_8px_24px_rgba(15,23,42,0.08)] backdrop-blur-xl">
           <div
@@ -132,7 +166,7 @@ export default function SigninPage() {
           </button>
         </div>
 
-        <div className="relative min-h-[30rem]">
+        <div className="relative min-h-[32rem]">
           <section
             className={`absolute inset-0 space-y-4 transition-all duration-400 ease-out ${
               isSignin
@@ -155,8 +189,8 @@ export default function SigninPage() {
                 <input
                   type="email"
                   placeholder="Enter your email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  value={emailSignIn}
+                  onChange={(e) => setEmailSignIn(e.target.value)}
                   className="w-full rounded-xl border border-white/40 bg-white/20 px-4 py-2.5 text-sm text-slate-800 outline-none shadow-[inset_0_1px_0_rgba(255,255,255,0.45)] backdrop-blur-xl transition placeholder:text-slate-500 focus:border-yellow-200/90 focus:ring-2 focus:ring-yellow-200/70"
                 />
               </div>
@@ -176,14 +210,14 @@ export default function SigninPage() {
                   <input
                     type={showPassword ? "text" : "password"}
                     placeholder="Enter your password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                    value={passwordSignIn}
+                    onChange={(e) => setPasswordSingIn(e.target.value)}
                     className="w-full rounded-xl border border-white/40 bg-white/20 px-4 py-2.5 pr-11 text-sm text-slate-800 outline-none shadow-[inset_0_1px_0_rgba(255,255,255,0.45)] backdrop-blur-xl transition placeholder:text-slate-500 focus:border-yellow-200/90 focus:ring-2 focus:ring-yellow-200/70"
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 transition-transform duration-200 hover:scale-110"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 transition-colors duration-200 hover:text-gray-600"
                   >
                     <EyeIcon open={showPassword} />
                   </button>
@@ -199,8 +233,16 @@ export default function SigninPage() {
 
             <SocialButtons />
 
-            <button className="w-full rounded-full border border-amber-300/80 bg-gradient-to-r from-amber-300 to-yellow-300 py-3 text-sm font-bold text-slate-900 shadow-sm shadow-amber-500/20 transition-all duration-200 hover:-translate-y-0.5 hover:from-amber-400 hover:to-yellow-400 hover:shadow-md active:from-amber-500 active:to-yellow-500">
-              Sign In →
+            <button
+              onClick={handleSignIn}
+              className="group w-full rounded-full border border-amber-300/80 bg-gradient-to-r from-amber-300 to-yellow-300 py-3 text-sm font-bold text-slate-900 shadow-sm shadow-amber-500/20 transition-colors duration-300 ease-out hover:from-amber-400 hover:to-yellow-400 active:from-amber-500 active:to-yellow-500"
+            >
+              <span className="inline-flex items-center gap-2">
+                <span>Sign In</span>
+                <span className="transition-transform duration-300 ease-out group-hover:translate-x-1 group-active:translate-x-0.5">
+                  &rarr;
+                </span>
+              </span>
             </button>
 
             <p className="text-center text-xs text-slate-600">
@@ -239,8 +281,8 @@ export default function SigninPage() {
                 <input
                   type="text"
                   placeholder="Enter your username"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
+                  value={fullName}
+                  onChange={(e) => setFullName(e.target.value)}
                   className="w-full rounded-xl border border-white/40 bg-white/20 px-4 py-2.5 text-sm text-slate-800 outline-none shadow-[inset_0_1px_0_rgba(255,255,255,0.45)] backdrop-blur-xl transition placeholder:text-slate-500 focus:border-yellow-200/90 focus:ring-2 focus:ring-yellow-200/70"
                 />
               </div>
@@ -271,7 +313,7 @@ export default function SigninPage() {
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 transition-transform duration-200 hover:scale-110"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 transition-colors duration-200 hover:text-gray-600"
                   >
                     <EyeIcon open={showPassword} />
                   </button>
@@ -287,8 +329,13 @@ export default function SigninPage() {
 
             <SocialButtons />
 
-            <button className="w-full rounded-full border border-amber-300/80 bg-gradient-to-r from-amber-300 to-yellow-300 py-3 text-sm font-bold text-slate-900 shadow-sm shadow-amber-500/20 transition-all duration-200 hover:-translate-y-0.5 hover:from-amber-400 hover:to-yellow-400 hover:shadow-md active:from-amber-500 active:to-yellow-500">
-              Sign up →
+            <button className="group w-full rounded-full border border-amber-300/80 bg-gradient-to-r from-amber-300 to-yellow-300 py-3 text-sm font-bold text-slate-900 shadow-sm shadow-amber-500/20 transition-colors duration-300 ease-out hover:from-amber-400 hover:to-yellow-400 active:from-amber-500 active:to-yellow-500">
+              <span className="inline-flex items-center gap-2">
+                <span>Sign up</span>
+                <span className="transition-transform duration-300 ease-out group-hover:translate-x-1 group-active:translate-x-0.5">
+                  &rarr;
+                </span>
+              </span>
             </button>
 
             <p className="text-center text-xs text-slate-600">
