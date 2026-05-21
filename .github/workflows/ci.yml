@@ -1,0 +1,61 @@
+name: PlovDev Continuous Integration
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  # 1. Job to check the Backend Node.js Environment
+  backend-checks:
+    name: Backend CI Checks
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository Code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js Runtime
+        uses: actions/setup-node@v4
+        with:
+          node-node-version: 20
+          cache: 'npm'
+          cache-dependency-path: backend/package-lock.json
+
+      - name: Install Backend Dependencies
+        run: |
+          cd backend
+          npm ci
+
+      # If you add test scripts later (e.g., npm test), uncomment the line below:
+      # - name: Run Backend Tests
+      #   run: |
+      #     cd backend
+      #     npm test
+
+  # 2. Job to check the Frontend React Environment
+  frontend-checks:
+    name: Frontend CI Checks
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository Code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js Runtime
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+          cache-dependency-path: client/package.json # Using package.json if lockfile isn't generated yet
+
+      - name: Install Frontend Dependencies
+        run: |
+          cd client
+          npm install
+
+      - name: Verify Production Build Compiles
+        run: |
+          cd client
+          npm run build
