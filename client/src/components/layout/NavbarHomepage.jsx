@@ -68,9 +68,9 @@ export default function NavbarHomepage() {
               </div> */}
 
                 {accessToken ? (
-                  <Link className="bg-cyan-500 text-black p-2 rounded-lg">Sign out</Link>
+                  <Link className="rounded-full border border-amber-300/80 bg-gradient-to-r from-amber-300 via-yellow-300 to-orange-200 px-4 py-2 text-sm font-semibold text-slate-900 shadow-[0_12px_28px_rgba(245,158,11,0.22)] transition-colors duration-300 ease-out hover:from-amber-400 hover:via-yellow-300 hover:to-orange-300">Sign out</Link>
                 ) : (
-                  <Link to = "/authpage" className="bg-cyan-500 text-black p-2 rounded-lg">Sign in</Link>
+                  <Link to = "/authpage" className="rounded-full border border-amber-300/80 bg-gradient-to-r from-amber-300 via-yellow-300 to-orange-200 px-4 py-2 text-sm font-semibold text-slate-900 shadow-[0_12px_28px_rgba(245,158,11,0.22)] transition-colors duration-300 ease-out hover:from-amber-400 hover:via-yellow-300 hover:to-orange-300">Sign in</Link>
                 )}
               </form>
 
